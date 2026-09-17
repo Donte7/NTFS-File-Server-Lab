@@ -1,0 +1,22 @@
+cat > .gitignore << 'EOF'
+# Terraform sensitive files - NEVER commit these
+terraform.tfvars
+*.tfvars
+!terraform.tfvars.example
+
+# Terraform state files
+terraform.tfstate
+terraform.tfstate.backup
+*.tfstate
+
+# Terraform working directory
+.terraform/
+.terraform.lock.hcl
+*.tfplan
+
+# Mac system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+EOF

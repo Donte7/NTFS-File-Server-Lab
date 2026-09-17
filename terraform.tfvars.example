@@ -1,0 +1,22 @@
+# terraform.tfvars.example
+# Safe to commit — contains NO real values
+# Copy this file to terraform.tfvars and fill in your real values
+
+location       = "Central US"
+server_vm_size = "Standard_D2s_v3"
+client_vm_size = "Standard_D2s_v3"
+
+# Your public IP in CIDR format
+# Find it at: whatismyip.com
+# Format must be: 1.2.3.4/32
+rdp_source = "YOUR_PUBLIC_IP/32" 
+
+# admin_password is NOT set here
+# Set it as an environment variable instead:
+#
+# Mac/Linux:
+# export TF_VAR_admin_password="YourStrongPassword!"
+#
+# Requirements:
+# Minimum 12 characters
+# Must contain uppercase + lowercase + number + symbol
