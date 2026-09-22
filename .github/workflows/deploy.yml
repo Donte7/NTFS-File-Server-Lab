@@ -316,8 +316,8 @@ jobs:
             -auto-approve \
             -input=false
 
-            - name: Destroy summary
-          run:
+      - name: Destroy summary
+        run: |
           echo "## Infrastructure Destroyed" >> "$GITHUB_STEP_SUMMARY"
           echo "All resources in RG-FileServerLab have been removed." >> "$GITHUB_STEP_SUMMARY"
           echo "Remote state in RG-TerraformState is preserved." >> "$GITHUB_STEP_SUMMARY"
