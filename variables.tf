@@ -68,4 +68,4 @@ variable "client_vm_size" {
   type        = string
   default     = "Standard_D2s_v3"
   description = "VM size for CLIENT01."
-}
+}# CI/CD pipeline first run - Wed Sep 30 22:33:45 EDT 2026
