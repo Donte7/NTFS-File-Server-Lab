@@ -4,6 +4,7 @@
 ![Platform](https://img.shields.io/badge/Platform-Azure-blue)
 ![IaC](https://img.shields.io/badge/IaC-Terraform-purple)
 ![OS](https://img.shields.io/badge/OS-Windows%20Server%202022-blue)
+[![CI/CD Pipeline](https://github.com/Donte7/ntfs-file-server-lab/actions/workflows/deploy.yml/badge.svg)](https://github.com/Donte7/ntfs-file-server-lab/actions/workflows/deploy.yml)
 
 > **Series:** 5-Lab Azure Infrastructure Series | **Lab:** 1 of 5 | **Builds toward:** Lab 2 — Azure RBAC
 
