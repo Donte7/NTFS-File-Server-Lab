@@ -58,7 +58,7 @@ The solution — still widely deployed in enterprise environments today — is a
 
 <!-- SCREENSHOT PLACEHOLDER -->
 <!-- Add architecture diagram screenshot here -->
-> *Screenshot: NTFS File Server Lab Architecture Diagram*
+![alt text](../../screenshots_digrams/NTFS-File-Sever/architecture-diagram.png)
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -170,11 +170,7 @@ Open the integrated terminal in VS Code:
 ```
 Terminal → New Terminal  (or Ctrl + `)
 ```
-
-<!-- SCREENSHOT PLACEHOLDER -->
-<!-- Add screenshot of VS Code with project structure visible in sidebar -->
-> *Screenshot: VS Code with project folder open*
-
+![alt text](<Screenshot 2026-10-09 at 9.44.15 AM.png>)
 ---
 
 ### Step 2 — Set Up Remote State Storage
@@ -213,7 +209,7 @@ tfstate
 
 <!-- SCREENSHOT PLACEHOLDER -->
 <!-- Add screenshot of terminal showing tfstate container created successfully -->
-> *Screenshot: Storage container creation confirmed*
+![alt text](../../screenshots_digrams/NTFS-File-Sever/ts_state.png)
 
 ---
 
@@ -293,10 +289,6 @@ Verify all three providers locked in:
 cat .terraform.lock.hcl | grep "provider"
 ```
 
-<!-- SCREENSHOT PLACEHOLDER -->
-<!-- Add screenshot of terraform init success output -->
-> *Screenshot: terraform init successfully initialized*
-
 ---
 
 ### Step 6 — Review the Plan
@@ -319,7 +311,7 @@ Review the output carefully. Every resource should show `+` (create). If you see
 
 <!-- SCREENSHOT PLACEHOLDER -->
 <!-- Add screenshot of terraform plan output showing 24 resources -->
-> *Screenshot: terraform plan showing 24 resources to add*
+![> *Screenshot: terraform plan showing 24 resources to add*](../../screenshots_digrams/NTFS-File-Sever/terraform_plan.png)
 
 ---
 
@@ -345,7 +337,7 @@ key_vault_name     = "kv-fslab-xxxxxxxx"  ← COPY THIS — needed for Step 8
 
 <!-- SCREENSHOT PLACEHOLDER -->
 <!-- Add screenshot of terraform apply completion with outputs visible -->
-> *Screenshot: terraform apply complete with all outputs*
+![> *Screenshot: terraform apply complete with all outputs*](../../screenshots_digrams/NTFS-File-Sever/terraform_apply.png)
 
 ---
 
@@ -374,7 +366,7 @@ Next Step — RDP into CLIENT01:
 
 <!-- SCREENSHOT PLACEHOLDER -->
 <!-- Add screenshot of configure-lab.ps1 completion output -->
-> *Screenshot: configure-lab.ps1 showing LAB FULLY CONFIGURED*
+![> *Screenshot: configure-lab.ps1 showing LAB FULLY CONFIGURED*](../../screenshots_digrams/NTFS-File-Sever/lab_fully_configured.png)
 
 > ⚠️ **Known issue with `Win2016` functional level:** If you see `The specified argument 'DomainLevel' was not recognized`, open `scripts/00-promote-dc.ps1` and change both `-ForestMode "WinThreshold"` and `-DomainMode "WinThreshold"` to `"Win2016"`. Re-run the script.
 
@@ -399,7 +391,7 @@ All test user passwords: `P@ssw0rd123!`
 
 <!-- SCREENSHOT PLACEHOLDER -->
 <!-- Add screenshot of Microsoft Remote Desktop connecting to CLIENT01 -->
-> *Screenshot: Microsoft Remote Desktop connected to CLIENT01*
+![> *Screenshot: Microsoft Remote Desktop connected to CLIENT01*](../../screenshots_digrams/NTFS-File-Sever/remote_desktop.png)
 
 **Permission Verification Matrix:**
 
@@ -552,7 +544,7 @@ This lab includes a GitHub Actions pipeline that automates the entire deployment
 ![Pipeline](https://img.shields.io/badge/Pipeline-4%20Jobs-brightgreen)
 
 ---
-
+![alt text](../../screenshots_digrams/NTFS-File-Sever/cicd-pipeline-diagram.png)
 ### How the Pipeline Works
 
 ```
@@ -682,9 +674,6 @@ Under Protection rules:
 
 This means even on a push to `main`, the deploy job pauses and waits for you to click **Approve** before any infrastructure changes happen. This is the correct production pattern.
 
-<!-- SCREENSHOT PLACEHOLDER -->
-<!-- Add screenshot of GitHub Environment protection rules configured -->
-> *Screenshot: GitHub Environment with required reviewer configured*
 
 ---
 
@@ -739,13 +728,6 @@ GitHub → your repo → Actions tab
 
 You will see four jobs appear. Validate and Plan run immediately. Deploy waits for your approval if you set up the environment protection.
 
-<!-- SCREENSHOT PLACEHOLDER -->
-<!-- Add screenshot of GitHub Actions tab showing pipeline running with all 4 jobs -->
-> *Screenshot: GitHub Actions pipeline running — all 4 jobs visible*
-
-<!-- SCREENSHOT PLACEHOLDER -->
-<!-- Add screenshot of successful pipeline run with green checkmarks on all jobs -->
-> *Screenshot: Pipeline completed successfully*
 
 ---
 
@@ -767,10 +749,6 @@ Plan: 24 to add, 0 to change, 0 to destroy.
 
 This means every infrastructure change gets reviewed before it is applied. The reviewer can see exactly what will happen in Azure before approving the merge.
 
-<!-- SCREENSHOT PLACEHOLDER -->
-<!-- Add screenshot of a PR with the Terraform plan posted as a comment -->
-> *Screenshot: Pull request with Terraform plan comment*
-
 ---
 
 ### Step 7 — Manual Destroy
@@ -784,9 +762,6 @@ GitHub → Actions → NTFS Lab — Deploy Infrastructure
 
 This triggers `terraform destroy` and removes all resources from `RG-FileServerLab`. The remote state storage account in `RG-TerraformState` is preserved.
 
-<!-- SCREENSHOT PLACEHOLDER -->
-<!-- Add screenshot of the manual workflow_dispatch trigger with destroy selected -->
-> *Screenshot: Manual destroy workflow trigger*
 
 ---
 
@@ -816,15 +791,6 @@ This triggers `terraform destroy` and removes all resources from `RG-FileServerL
 
 ---
 
-### ⚠️ Interview Tip — CI/CD for infrastructure
-
-> "Walk me through how you would set up a CI/CD pipeline for Terraform."
-
-Your answer:
-
-> "I use GitHub Actions with four jobs. Validate runs on every push and PR — it checks formatting and syntax before anything touches the cloud. Plan runs next and generates the Terraform execution plan, which gets posted as a comment on pull requests so reviewers can see exactly what will change in Azure before approving the merge. Deploy only runs on push to main and applies the exact plan artifact from the previous job — never a fresh plan, so what you reviewed is what gets applied. Destroy is manual-only via workflow_dispatch and requires explicit human selection — it never runs automatically. I use a dedicated Service Principal scoped to Contributor for the pipeline identity, store all credentials as GitHub Secrets, and protect the production environment with required reviewer approval. This means every infrastructure change is reviewed, tested, and approved before it reaches Azure."
-
-That answer demonstrates you understand not just the mechanics but the security reasoning behind each decision.
 
 ---
 
